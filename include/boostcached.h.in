@@ -1,0 +1,2 @@
+#define boostcached_VERSION_MAJOR @boostcached_VERSION_MAJOR@
+#define boostcached_VERSION_MINOR @boostcached_VERSION_MINOR@
