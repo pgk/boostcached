@@ -65,7 +65,7 @@ BoostCached::Connection::Connection(boost::asio::io_service &io_service, Cache &
 void BoostCached::Connection::handle_write(const boost::system::error_code& err, size_t bytesTransferred)
 {
 	if (!err) {
-		BOOST_LOG_TRIVIAL(info) << "[DEBUG]\t" << bytesTransferred << " bytes written";
+		BOOST_LOG_TRIVIAL(info) << "[DEBUG] " << bytesTransferred << " bytes written";
 		_socket.async_read_some(boost::asio::buffer(_data, max_buffer_size),
 			boost::bind(&Connection::handle_read, shared_from_this(),
 				boost::asio::placeholders::error,
@@ -80,21 +80,20 @@ void BoostCached::Connection::handle_read(const boost::system::error_code& err, 
 		std::string what_we_got = std::string(_data).substr(0, bytesTransferred);
 
 		std::string action = what_we_got.substr(0, 3);
-		BOOST_LOG_TRIVIAL(info) << "[DEBUG]\tboost::thread<" << boost::this_thread::get_id() << ">: " << bytesTransferred << " bytes read from connection:";
-		BOOST_LOG_TRIVIAL(info) << "[DEBUG]\twe got: " << what_we_got;
+		BOOST_LOG_TRIVIAL(info) << "[DEBUG] thread<" << boost::this_thread::get_id() << ">: " << bytesTransferred << " bytes read.";
 
 
 		if (action == "get" || action == "GET")
 		{
 			std::string key = boost::replace_all_copy(boost::trim_copy(what_we_got.substr(3)), "\r\n", "");
-			BOOST_LOG_TRIVIAL(info) << "[DEBUG]\tGET " << key << ":";
+			BOOST_LOG_TRIVIAL(info) << "[DEBUG] GET " << key << ":";
 			_message = _cache.get(key);
 		} else if (action == "set" || action == "SET")
 		{
 			std::vector<std::string> sv;
 			std::string key_value_with_enter = boost::trim_right_copy(what_we_got.substr(4));
 			std::string key_value = boost::replace_all_copy(key_value_with_enter, "\r\n", "");
-			BOOST_LOG_TRIVIAL(info) << "[DEBUG]\tKeyValue is " << key_value;
+
 			boost::algorithm::split(sv, key_value, boost::algorithm::is_space());
 			std::string key = sv.front();
 			std::string value = sv.back();
