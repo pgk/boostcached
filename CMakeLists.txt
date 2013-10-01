@@ -26,7 +26,6 @@ set (
 	"${LIB_BOOST_PATH}/libboost_regex-mt.a" 
 	"${LIB_BOOST_PATH}/libboost_program_options-mt.a"
 	"${LIB_BOOST_PATH}/libboost_log-mt.a"
-	"${LIB_BOOST_PATH}/libboost_log_setup-mt.a"
 	"${LIB_BOOST_PATH}/libboost_thread-mt.a"
 	"${LIB_BOOST_PATH}/libboost_system-mt.a"
 )
